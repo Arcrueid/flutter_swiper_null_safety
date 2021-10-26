@@ -31,36 +31,37 @@ class SwiperControl extends SwiperPlugin {
       this.size: 30.0,
       this.padding: const EdgeInsets.all(5.0)});
 
-  Widget buildButton(SwiperPluginConfig config, Color color, IconData iconDaga,
-      int quarterTurns, bool previous) {
-    return new GestureDetector(
+  Widget buildButton(SwiperPluginConfig config, Color color, IconData iconDaga, int quarterTurns, bool previous) {
+    return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
         if (previous) {
-          config.controller.previous(animation: true);
+          config.controller.previous();
         } else {
-          config.controller.next(animation: true);
+          config.controller.next();
         }
       },
       child: Padding(
-          padding: padding,
-          child: RotatedBox(
-              quarterTurns: quarterTurns,
-              child: Icon(
-                iconDaga,
-                semanticLabel: previous ? "Previous" : "Next",
-                size: size,
-                color: color,
-              ))),
+        padding: padding,
+        child: RotatedBox(
+          quarterTurns: quarterTurns,
+          child: Icon(
+            iconDaga,
+            semanticLabel: previous ? 'Previous' : 'Next',
+            size: size,
+            color: color,
+          ),
+        ),
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context, SwiperPluginConfig config) {
-    ThemeData themeData = Theme.of(context);
+    final ThemeData themeData = Theme.of(context);
 
-    Color color = this.color ?? themeData.primaryColor;
-    Color disableColor = this.disableColor ?? themeData.disabledColor;
+    final Color color = this.color ?? themeData.primaryColor;
+    final Color disableColor = this.disableColor ?? themeData.disabledColor;
     Color prevColor;
     Color nextColor;
 
@@ -94,7 +95,7 @@ class SwiperControl extends SwiperPlugin {
       );
     }
 
-    return new Container(
+    return Container(
       height: double.infinity,
       child: child,
       width: double.infinity,

@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class WarmPainter extends BasePainter {
-  WarmPainter(PageIndicator widget, double page, int index, Paint paint)
-      : super(widget, page, index, paint);
+  WarmPainter(PageIndicator widget, double page, int index, Paint paint) : super(widget, page, index, paint);
 
   void draw(Canvas canvas, double space, double size, double radius) {
     double progress = page - index;
@@ -18,24 +17,17 @@ class WarmPainter extends BasePainter {
       //left:0.0=>distance
 
       double left = index * distance + distance * (progress - 0.5) * 2;
-      canvas.drawRRect(
-          new RRect.fromLTRBR(
-              left, 0.0, right, size, new Radius.circular(radius)),
-          _paint);
+      canvas.drawRRect(RRect.fromLTRBR(left, 0.0, right, size, Radius.circular(radius)), _paint);
     } else {
       double right = start + size + distance * progress * 2;
 
-      canvas.drawRRect(
-          new RRect.fromLTRBR(
-              start, 0.0, right, size, new Radius.circular(radius)),
-          _paint);
+      canvas.drawRRect(RRect.fromLTRBR(start, 0.0, right, size, Radius.circular(radius)), _paint);
     }
   }
 }
 
 class DropPainter extends BasePainter {
-  DropPainter(PageIndicator widget, double page, int index, Paint paint)
-      : super(widget, page, index, paint);
+  DropPainter(PageIndicator widget, double page, int index, Paint paint) : super(widget, page, index, paint);
 
   @override
   void draw(Canvas canvas, double space, double size, double radius) {
@@ -46,48 +38,38 @@ class DropPainter extends BasePainter {
 
     //lerp(begin, end, progress)
 
-    canvas.drawCircle(
-        new Offset(radius + ((page) * (size + space)),
-            radius - dropHeight * (1 - rate)),
-        radius * (scale + rate * (1.0 - scale)),
-        _paint);
+    canvas.drawCircle(Offset(radius + ((page) * (size + space)), radius - dropHeight * (1 - rate)),
+        radius * (scale + rate * (1.0 - scale)), _paint);
   }
 }
 
 class NonePainter extends BasePainter {
-  NonePainter(PageIndicator widget, double page, int index, Paint paint)
-      : super(widget, page, index, paint);
+  NonePainter(PageIndicator widget, double page, int index, Paint paint) : super(widget, page, index, paint);
 
   @override
   void draw(Canvas canvas, double space, double size, double radius) {
     double progress = page - index;
-    double secondOffset = index == widget.count - 1
-        ? radius
-        : radius + ((index + 1) * (size + space));
+    double secondOffset = index == widget.count - 1 ? radius : radius + ((index + 1) * (size + space));
 
     if (progress > 0.5) {
-      canvas.drawCircle(new Offset(secondOffset, radius), radius, _paint);
+      canvas.drawCircle(Offset(secondOffset, radius), radius, _paint);
     } else {
-      canvas.drawCircle(new Offset(radius + (index * (size + space)), radius),
-          radius, _paint);
+      canvas.drawCircle(Offset(radius + (index * (size + space)), radius), radius, _paint);
     }
   }
 }
 
 class SlidePainter extends BasePainter {
-  SlidePainter(PageIndicator widget, double page, int index, Paint paint)
-      : super(widget, page, index, paint);
+  SlidePainter(PageIndicator widget, double page, int index, Paint paint) : super(widget, page, index, paint);
 
   @override
   void draw(Canvas canvas, double space, double size, double radius) {
-    canvas.drawCircle(
-        new Offset(radius + (page * (size + space)), radius), radius, _paint);
+    canvas.drawCircle(Offset(radius + (page * (size + space)), radius), radius, _paint);
   }
 }
 
 class ScalePainter extends BasePainter {
-  ScalePainter(PageIndicator widget, double page, int index, Paint paint)
-      : super(widget, page, index, paint);
+  ScalePainter(PageIndicator widget, double page, int index, Paint paint) : super(widget, page, index, paint);
 
   // 连续的两个点，含有最后一个和第一个
   @override
@@ -108,8 +90,7 @@ class ScalePainter extends BasePainter {
       if (_shouldSkip(i)) {
         continue;
       }
-      canvas.drawCircle(new Offset(i * (size + space) + radius, radius),
-          radius * widget.scale, _paint);
+      canvas.drawCircle(Offset(i * (size + space) + radius, radius), radius * widget.scale, _paint);
     }
 
     _paint.color = widget.activeColor;
@@ -118,25 +99,21 @@ class ScalePainter extends BasePainter {
 
   @override
   void draw(Canvas canvas, double space, double size, double radius) {
-    double secondOffset = index == widget.count - 1
-        ? radius
-        : radius + ((index + 1) * (size + space));
+    double secondOffset = index == widget.count - 1 ? radius : radius + ((index + 1) * (size + space));
 
     double progress = page - index;
     _paint.color = Color.lerp(widget.activeColor, widget.color, progress)!;
     //last
-    canvas.drawCircle(new Offset(radius + (index * (size + space)), radius),
-        lerp(radius, radius * widget.scale, progress), _paint);
+    canvas.drawCircle(
+        Offset(radius + (index * (size + space)), radius), lerp(radius, radius * widget.scale, progress), _paint);
     //first
     _paint.color = Color.lerp(widget.color, widget.activeColor, progress)!;
-    canvas.drawCircle(new Offset(secondOffset, radius),
-        lerp(radius * widget.scale, radius, progress), _paint);
+    canvas.drawCircle(Offset(secondOffset, radius), lerp(radius * widget.scale, radius, progress), _paint);
   }
 }
 
 class ColorPainter extends BasePainter {
-  ColorPainter(PageIndicator widget, double page, int index, Paint paint)
-      : super(widget, page, index, paint);
+  ColorPainter(PageIndicator widget, double page, int index, Paint paint) : super(widget, page, index, paint);
 
   // 连续的两个点，含有最后一个和第一个
   @override
@@ -150,17 +127,14 @@ class ColorPainter extends BasePainter {
   @override
   void draw(Canvas canvas, double space, double size, double radius) {
     double progress = page - index;
-    double secondOffset = index == widget.count - 1
-        ? radius
-        : radius + ((index + 1) * (size + space));
+    double secondOffset = index == widget.count - 1 ? radius : radius + ((index + 1) * (size + space));
 
     _paint.color = Color.lerp(widget.activeColor, widget.color, progress)!;
     //left
-    canvas.drawCircle(
-        new Offset(radius + (index * (size + space)), radius), radius, _paint);
+    canvas.drawCircle(Offset(radius + (index * (size + space)), radius), radius, _paint);
     //right
     _paint.color = Color.lerp(widget.color, widget.activeColor, progress)!;
-    canvas.drawCircle(new Offset(secondOffset, radius), radius, _paint);
+    canvas.drawCircle(Offset(secondOffset, radius), radius, _paint);
   }
 }
 
@@ -194,8 +168,7 @@ abstract class BasePainter extends CustomPainter {
       if (_shouldSkip(i)) {
         continue;
       }
-      canvas.drawCircle(
-          new Offset(i * (size + space) + radius, radius), radius, _paint);
+      canvas.drawCircle(Offset(i * (size + space) + radius, radius), radius, _paint);
     }
 
     double page = this.page;
@@ -214,51 +187,44 @@ abstract class BasePainter extends CustomPainter {
 
 class _PageIndicatorState extends State<PageIndicator> {
   int index = 0;
-  Paint _paint = new Paint();
+  Paint _paint = Paint();
 
   BasePainter _createPainer() {
     switch (widget.layout) {
       case PageIndicatorLayout.NONE:
-        return new NonePainter(
-            widget, widget.controller?.page ?? 0.0, index, _paint);
+        return NonePainter(widget, widget.controller?.page ?? 0.0, index, _paint);
       case PageIndicatorLayout.SLIDE:
-        return new SlidePainter(
-            widget, widget.controller?.page ?? 0.0, index, _paint);
+        return SlidePainter(widget, widget.controller?.page ?? 0.0, index, _paint);
       case PageIndicatorLayout.WARM:
-        return new WarmPainter(
-            widget, widget.controller?.page ?? 0.0, index, _paint);
+        return WarmPainter(widget, widget.controller?.page ?? 0.0, index, _paint);
       case PageIndicatorLayout.COLOR:
-        return new ColorPainter(
-            widget, widget.controller?.page ?? 0.0, index, _paint);
+        return ColorPainter(widget, widget.controller?.page ?? 0.0, index, _paint);
       case PageIndicatorLayout.SCALE:
-        return new ScalePainter(
-            widget, widget.controller?.page ?? 0.0, index, _paint);
+        return ScalePainter(widget, widget.controller?.page ?? 0.0, index, _paint);
       case PageIndicatorLayout.DROP:
-        return new DropPainter(
-            widget, widget.controller?.page ?? 0.0, index, _paint);
+        return DropPainter(widget, widget.controller?.page ?? 0.0, index, _paint);
       default:
-        throw new Exception("Not a valid layout");
+        throw Exception('Not a valid layout');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget child = new SizedBox(
+    Widget child = SizedBox(
       width: widget.count * widget.size + (widget.count - 1) * widget.space,
       height: widget.size,
-      child: new CustomPaint(
+      child: CustomPaint(
         painter: _createPainer(),
       ),
     );
 
-    if (widget.layout == PageIndicatorLayout.SCALE ||
-        widget.layout == PageIndicatorLayout.COLOR) {
-      child = new ClipRect(
+    if (widget.layout == PageIndicatorLayout.SCALE || widget.layout == PageIndicatorLayout.COLOR) {
+      child = ClipRect(
         child: child,
       );
     }
 
-    return new IgnorePointer(
+    return IgnorePointer(
       child: child,
     );
   }
@@ -346,6 +312,6 @@ class PageIndicator extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return new _PageIndicatorState();
+    return _PageIndicatorState();
   }
 }

@@ -156,7 +156,7 @@ class Swiper extends StatefulWidget {
                             indicatorLayout == PageIndicatorLayout.COLOR ||
                             indicatorLayout == PageIndicatorLayout.NONE)) ||
                     (loop && layout != SwiperLayout.DEFAULT)),
-            "Only support `PageIndicatorLayout.SCALE` and `PageIndicatorLayout.COLOR`when layout==SwiperLayout.DEFAULT in loop mode"),
+            'Only support `PageIndicatorLayout.SCALE` and `PageIndicatorLayout.COLOR`when layout==SwiperLayout.DEFAULT in loop mode'),
         super(key: key);
 
   factory Swiper.children({
@@ -188,7 +188,7 @@ class Swiper extends StatefulWidget {
     bool outer: false,
     double scale: 1.0,
   }) {
-    return new Swiper(
+    return  Swiper(
         transformer: transformer,
         customLayoutOption: customLayoutOption,
         containerHeight: containerHeight,
@@ -250,7 +250,7 @@ class Swiper extends StatefulWidget {
     bool outer: false,
     double scale: 1.0,
   }) {
-    return new Swiper(
+    return  Swiper(
         transformer: transformer,
         customLayoutOption: customLayoutOption,
         containerHeight: containerHeight,
@@ -284,7 +284,7 @@ class Swiper extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return new _SwiperState();
+    return  _SwiperState();
   }
 }
 
@@ -297,7 +297,7 @@ abstract class _SwiperTimerMixin extends State<Swiper> {
   void initState() {
     _controller = widget.controller;
     if (_controller == null) {
-      _controller = new SwiperController();
+      _controller =  SwiperController();
     }
     _controller?.addListener(_onController);
     _handleAutoplay();
@@ -360,13 +360,12 @@ abstract class _SwiperTimerMixin extends State<Swiper> {
   }
 
   void _startAutoplay() {
-    assert(_timer == null, "Timer must be stopped before start!");
-    _timer =
-        Timer.periodic(Duration(milliseconds: widget.autoplayDelay), _onTimer);
+    assert(_timer == null, 'Timer must be stopped before start!');
+    _timer = Timer.periodic(Duration(milliseconds: widget.autoplayDelay), _onTimer);
   }
 
   void _onTimer(Timer timer) {
-    _controller?.next(animation: true);
+    _controller?.next();
   }
 
   void _stopAutoplay() {
@@ -383,7 +382,7 @@ class _SwiperState extends _SwiperTimerMixin {
   TransformerPageController? _pageController;
 
   Widget _wrapTap(BuildContext context, int index) {
-    return new GestureDetector(
+    return  GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
         if (this.widget.onTap != null) {
@@ -398,12 +397,11 @@ class _SwiperState extends _SwiperTimerMixin {
   void initState() {
     _activeIndex = widget.index ?? 0;
     if (_isPageViewLayout()) {
-      _pageController = new TransformerPageController(
+      _pageController =  TransformerPageController(
           initialPage: widget.index ?? 0,
           loop: widget.loop,
           itemCount: widget.itemCount,
-          reverse:
-              widget.transformer == null ? false : widget.transformer!.reverse,
+          reverse: widget.transformer == null ? false : widget.transformer!.reverse,
           viewportFraction: widget.viewportFraction);
     }
     super.initState();
@@ -418,8 +416,7 @@ class _SwiperState extends _SwiperTimerMixin {
     super.didChangeDependencies();
   }
 
-  bool _getReverse(Swiper widget) =>
-      widget.transformer == null ? false : widget.transformer!.reverse;
+  bool _getReverse(Swiper widget) => widget.transformer == null ? false : widget.transformer!.reverse;
 
   @override
   void didUpdateWidget(Swiper oldWidget) {
@@ -431,7 +428,7 @@ class _SwiperState extends _SwiperTimerMixin {
               widget.itemCount != oldWidget.itemCount ||
               widget.viewportFraction != oldWidget.viewportFraction ||
               _getReverse(widget) != _getReverse(oldWidget))) {
-        _pageController = new TransformerPageController(
+        _pageController =  TransformerPageController(
             initialPage: widget.index ?? 0,
             loop: widget.loop,
             itemCount: widget.itemCount,
@@ -470,7 +467,7 @@ class _SwiperState extends _SwiperTimerMixin {
     }
 
     if (widget.layout == SwiperLayout.STACK) {
-      return new _StackSwiper(
+      return  _StackSwiper(
         loop: widget.loop,
         itemWidth: widget.itemWidth,
         itemHeight: widget.itemHeight,
@@ -486,11 +483,10 @@ class _SwiperState extends _SwiperTimerMixin {
     } else if (_isPageViewLayout()) {
       PageTransformer? transformer = widget.transformer;
       if (widget.scale != null || widget.fade != null) {
-        transformer =
-            new ScaleAndFadeTransformer(scale: widget.scale, fade: widget.fade);
+        transformer =  ScaleAndFadeTransformer(scale: widget.scale, fade: widget.fade);
       }
 
-      Widget child = new TransformerPageView(
+      Widget child =  TransformerPageView(
         pageController: _pageController,
         loop: widget.loop,
         itemCount: widget.itemCount,
@@ -498,7 +494,7 @@ class _SwiperState extends _SwiperTimerMixin {
         transformer: transformer,
         viewportFraction: widget.viewportFraction,
         index: _activeIndex,
-        duration: new Duration(milliseconds: widget.duration),
+        duration:  Duration(milliseconds: widget.duration),
         scrollDirection: widget.scrollDirection,
         onPageChanged: _onIndexChanged,
         curve: widget.curve,
@@ -506,7 +502,7 @@ class _SwiperState extends _SwiperTimerMixin {
         controller: _controller,
       );
       if (widget.autoplayDisableOnInteraction && widget.autoplay) {
-        return new NotificationListener(
+        return  NotificationListener(
           child: child,
           onNotification: (ScrollNotification notification) {
             if (notification is ScrollStartNotification) {
@@ -525,7 +521,7 @@ class _SwiperState extends _SwiperTimerMixin {
 
       return child;
     } else if (widget.layout == SwiperLayout.TINDER) {
-      return new _TinderSwiper(
+      return  _TinderSwiper(
         loop: widget.loop,
         itemWidth: widget.itemWidth,
         itemHeight: widget.itemHeight,
@@ -539,7 +535,7 @@ class _SwiperState extends _SwiperTimerMixin {
         scrollDirection: widget.scrollDirection,
       );
     } else if (widget.layout == SwiperLayout.CUSTOM) {
-      return new _CustomLayoutSwiper(
+      return  _CustomLayoutSwiper(
         loop: widget.loop,
         option: widget.customLayoutOption,
         itemWidth: widget.itemWidth,
@@ -554,13 +550,13 @@ class _SwiperState extends _SwiperTimerMixin {
         scrollDirection: widget.scrollDirection,
       );
     } else {
-      return new Container();
+      return  Container();
     }
   }
 
   SwiperPluginConfig _ensureConfig(SwiperPluginConfig? config) {
     if (config == null) {
-      config = new SwiperPluginConfig(
+      config =  SwiperPluginConfig(
           outer: widget.outer,
           itemCount: widget.itemCount,
           layout: widget.layout,
@@ -574,8 +570,7 @@ class _SwiperState extends _SwiperTimerMixin {
     return config;
   }
 
-  List<Widget> _ensureListForStack(
-      Widget swiper, List<Widget>? listForStack, Widget widget) {
+  List<Widget> _ensureListForStack(Widget swiper, List<Widget>? listForStack, Widget widget) {
     if (listForStack == null) {
       listForStack = [swiper, widget];
     } else {
@@ -592,32 +587,27 @@ class _SwiperState extends _SwiperTimerMixin {
     if (widget.control != null) {
       //Stack
       config = _ensureConfig(config);
-      listForStack = _ensureListForStack(
-          swiper, listForStack, widget.control!.build(context, config));
+      listForStack = _ensureListForStack(swiper, listForStack, widget.control!.build(context, config));
     }
 
     if (widget.plugins != null) {
       config = _ensureConfig(config);
       for (SwiperPlugin plugin in widget.plugins!) {
-        listForStack = _ensureListForStack(
-            swiper, listForStack, plugin.build(context, config));
+        listForStack = _ensureListForStack(swiper, listForStack, plugin.build(context, config));
       }
     }
     if (widget.pagination != null) {
       config = _ensureConfig(config);
       if (widget.outer) {
-        return _buildOuterPagination(
-            widget.pagination as SwiperPagination,
-            listForStack == null ? swiper : new Stack(children: listForStack),
-            config);
+        return _buildOuterPagination(widget.pagination as SwiperPagination,
+            listForStack == null ? swiper :  Stack(children: listForStack), config);
       } else {
-        listForStack = _ensureListForStack(
-            swiper, listForStack, widget.pagination!.build(context, config));
+        listForStack = _ensureListForStack(swiper, listForStack, widget.pagination!.build(context, config));
       }
     }
 
     if (listForStack != null) {
-      return new Stack(
+      return  Stack(
         children: listForStack,
       );
     }
@@ -625,22 +615,20 @@ class _SwiperState extends _SwiperTimerMixin {
     return swiper;
   }
 
-  Widget _buildOuterPagination(
-      SwiperPagination pagination, Widget swiper, SwiperPluginConfig config) {
+  Widget _buildOuterPagination(SwiperPagination pagination, Widget swiper, SwiperPluginConfig config) {
     List<Widget> list = [];
     //Only support bottom yet!
     if (widget.containerHeight != null || widget.containerWidth != null) {
       list.add(swiper);
     } else {
-      list.add(new Expanded(child: swiper));
+      list.add( Expanded(child: swiper));
     }
 
-    list.add(new Align(
-      alignment: Alignment.center,
+    list.add( Align(
       child: pagination.build(context, config),
     ));
 
-    return new Column(
+    return  Column(
       children: list,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
@@ -719,7 +707,7 @@ class _TinderSwiper extends _SubSwiper {
 
   @override
   State<StatefulWidget> createState() {
-    return new _TinderState();
+    return  _TinderState();
   }
 }
 
@@ -753,7 +741,7 @@ class _StackSwiper extends _SubSwiper {
 
   @override
   State<StatefulWidget> createState() {
-    return new _StackViewState();
+    return  _StackViewState();
   }
 }
 
@@ -824,21 +812,19 @@ class _TinderState extends _CustomLayoutStateBase<_TinderSwiper> {
     double o = _getValue(opacity, animationValue, i);
     double a = _getValue(rotates, animationValue, i);
 
-    Alignment alignment = widget.scrollDirection == Axis.horizontal
-        ? Alignment.bottomCenter
-        : Alignment.centerLeft;
+    Alignment alignment = widget.scrollDirection == Axis.horizontal ? Alignment.bottomCenter : Alignment.centerLeft;
 
-    return new Opacity(
+    return  Opacity(
       opacity: o,
-      child: new Transform.rotate(
+      child:  Transform.rotate(
         angle: a / 180.0,
-        child: new Transform.translate(
-          key: new ValueKey<int>(_currentIndex + i),
-          offset: new Offset(f, fy),
-          child: new Transform.scale(
+        child:  Transform.translate(
+          key:  ValueKey<int>(_currentIndex + i),
+          offset:  Offset(f, fy),
+          child:  Transform.scale(
             scale: s,
             alignment: alignment,
-            child: new SizedBox(
+            child:  SizedBox(
               width: widget.itemWidth,
               height: widget.itemHeight,
               child: widget.itemBuilder(context, realIndex),
@@ -897,23 +883,19 @@ class _StackViewState extends _CustomLayoutStateBase<_StackSwiper> {
     double f = _getValue(offsets, animationValue, i);
     double o = _getValue(opacity, animationValue, i);
 
-    Offset offset = widget.scrollDirection == Axis.horizontal
-        ? new Offset(f, 0.0)
-        : new Offset(0.0, f);
+    Offset offset = widget.scrollDirection == Axis.horizontal ?  Offset(f, 0.0) :  Offset(0.0, f);
 
-    Alignment alignment = widget.scrollDirection == Axis.horizontal
-        ? Alignment.centerLeft
-        : Alignment.topCenter;
+    Alignment alignment = widget.scrollDirection == Axis.horizontal ? Alignment.centerLeft : Alignment.topCenter;
 
-    return new Opacity(
+    return  Opacity(
       opacity: o,
-      child: new Transform.translate(
-        key: new ValueKey<int>(_currentIndex + i),
+      child:  Transform.translate(
+        key:  ValueKey<int>(_currentIndex + i),
         offset: offset,
-        child: new Transform.scale(
+        child:  Transform.scale(
           scale: s,
           alignment: alignment,
-          child: new SizedBox(
+          child:  SizedBox(
             width: widget.itemWidth,
             height: widget.itemHeight,
             child: widget.itemBuilder(context, realIndex),
@@ -940,7 +922,7 @@ class ScaleAndFadeTransformer extends PageTransformer {
       double scaleFactor = (1 - position.abs()) * (1 - _scale!);
       double scale = _scale! + scaleFactor;
 
-      child = new Transform.scale(
+      child =  Transform.scale(
         scale: scale,
         child: item,
       );
@@ -949,7 +931,7 @@ class ScaleAndFadeTransformer extends PageTransformer {
     if (_fade != null) {
       double fadeFactor = (1 - position.abs()) * (1 - _fade!);
       double opacity = _fade! + fadeFactor;
-      child = new Opacity(
+      child =  Opacity(
         opacity: opacity,
         child: child,
       );

@@ -7,7 +7,7 @@ import 'forms/form_widget.dart';
 class ExampleCustom extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new _ExampleCustomState();
+    return _ExampleCustomState();
   }
 }
 
@@ -47,8 +47,8 @@ class _ExampleCustomState extends State<ExampleCustom> {
 
   Widget _buildItem(BuildContext context, int index) {
     return ClipRRect(
-      borderRadius: new BorderRadius.all(new Radius.circular(_radius)),
-      child: new Image.asset(
+      borderRadius: BorderRadius.all(Radius.circular(_radius)),
+      child: Image.asset(
         images[index % images.length],
         fit: BoxFit.fill,
       ),
@@ -57,28 +57,20 @@ class _ExampleCustomState extends State<ExampleCustom> {
 
   @override
   void didUpdateWidget(ExampleCustom oldWidget) {
-    customLayoutOption = new CustomLayoutOption(startIndex: -1, stateCount: 3)
-        .addRotate([-45.0 / 180, 0.0, 45.0 / 180]).addTranslate([
-      new Offset(-370.0, -40.0),
-      new Offset(0.0, 0.0),
-      new Offset(370.0, -40.0)
-    ]);
+    customLayoutOption = CustomLayoutOption(startIndex: -1, stateCount: 3).addRotate(
+        [-45.0 / 180, 0.0, 45.0 / 180]).addTranslate([Offset(-370.0, -40.0), Offset(0.0, 0.0), Offset(370.0, -40.0)]);
     super.didUpdateWidget(oldWidget);
   }
 
   @override
   void initState() {
-    customLayoutOption = new CustomLayoutOption(startIndex: -1, stateCount: 3)
-        .addRotate([-25.0 / 180, 0.0, 25.0 / 180]).addTranslate([
-      new Offset(-350.0, 0.0),
-      new Offset(0.0, 0.0),
-      new Offset(350.0, 0.0)
-    ]);
+    customLayoutOption = CustomLayoutOption(startIndex: -1, stateCount: 3).addRotate(
+        [-25.0 / 180, 0.0, 25.0 / 180]).addTranslate([Offset(-350.0, 0.0), Offset(0.0, 0.0), Offset(350.0, 0.0)]);
     _fade = 1.0;
     _currentIndex = 0;
     _curve = Curves.ease;
     _scale = 0.8;
-    _controller = new SwiperController();
+    _controller = SwiperController();
     _layout = SwiperLayout.TINDER;
     _radius = 10.0;
     _padding = 0.0;
@@ -96,13 +88,12 @@ class _ExampleCustomState extends State<ExampleCustom> {
 // maintain the index
 
   Widget buildSwiper() {
-    return new Swiper(
+    return Swiper(
       onTap: (int index) {
-        Navigator.of(context)
-            .push(new MaterialPageRoute(builder: (BuildContext context) {
+        Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
           return Scaffold(
             appBar: AppBar(
-              title: Text("New page"),
+              title: Text(' page'),
             ),
             body: Container(),
           );
@@ -132,110 +123,95 @@ class _ExampleCustomState extends State<ExampleCustom> {
       scrollDirection: _scrollDirection,
       indicatorLayout: PageIndicatorLayout.COLOR,
       autoplayDisableOnInteraction: _autoplayDisableOnInteraction,
-      pagination: new SwiperPagination(
-          builder: const DotSwiperPaginationBuilder(
-              size: 20.0, activeSize: 20.0, space: 10.0)),
+      pagination:
+          SwiperPagination(builder: const DotSwiperPaginationBuilder(size: 20.0, activeSize: 20.0, space: 10.0)),
     );
   }
 
   late SwiperController _controller;
-  TextEditingController numberController = new TextEditingController();
+  TextEditingController numberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return new Column(children: <Widget>[
-      new Container(
+    return Column(children: <Widget>[
+      Container(
         color: Colors.black87,
-        child: new SizedBox(
-            height: 300.0, width: double.infinity, child: buildSwiper()),
+        child: SizedBox(height: 300.0, width: double.infinity, child: buildSwiper()),
       ),
-      new Expanded(
-          child: new ListView(
+      Expanded(
+          child: ListView(
         children: <Widget>[
-          new Text("Index:$_currentIndex"),
-          new Row(
+          Text('Index:$_currentIndex'),
+          Row(
             children: <Widget>[
-              new ElevatedButton(
+              ElevatedButton(
                 onPressed: () {
-                  _controller.previous(animation: true);
+                  _controller.previous();
                 },
-                child: new Text("Prev"),
+                child: Text('Prev'),
               ),
-              new ElevatedButton(
+              ElevatedButton(
                 onPressed: () {
-                  _controller.next(animation: true);
+                  _controller.next();
                 },
-                child: new Text("Next"),
+                child: Text('Next'),
               ),
-              new Expanded(
-                  child: new TextField(
+              Expanded(
+                  child: TextField(
                 controller: numberController,
               )),
-              new ElevatedButton(
+              ElevatedButton(
                 onPressed: () {
                   var text = numberController.text;
                   setState(() {
                     _currentIndex = int.parse(text);
                   });
                 },
-                child: new Text("Update"),
+                child: Text('Update'),
               ),
             ],
           ),
-          new FormWidget(
-              label: "layout",
-              child: new FormSelect<SwiperLayout>(
-                placeholder: "Select layout",
+          FormWidget(
+              label: 'layout',
+              child: FormSelect<SwiperLayout>(
+                placeholder: 'Select layout',
                 value: _layout,
-                values: [
-                  SwiperLayout.DEFAULT,
-                  SwiperLayout.STACK,
-                  SwiperLayout.TINDER,
-                  SwiperLayout.CUSTOM
-                ],
+                values: [SwiperLayout.DEFAULT, SwiperLayout.STACK, SwiperLayout.TINDER, SwiperLayout.CUSTOM],
                 valueChanged: (SwiperLayout value) {
                   _layout = value;
                   setState(() {});
                 },
               )),
-          new FormWidget(
-            label: "scrollDirection",
-            child: new Switch(
+          FormWidget(
+            label: 'scrollDirection',
+            child: Switch(
                 value: _scrollDirection == Axis.horizontal,
-                onChanged: (bool value) => setState(() => _scrollDirection =
-                    value ? Axis.horizontal : Axis.vertical)),
+                onChanged: (bool value) => setState(() => _scrollDirection = value ? Axis.horizontal : Axis.vertical)),
           ),
-          new FormWidget(
-            label: "autoplayDisableOnInteractio",
-            child: new Switch(
+          FormWidget(
+            label: 'autoplayDisableOnInteractio',
+            child: Switch(
                 value: _autoplayDisableOnInteraction,
-                onChanged: (bool value) =>
-                    setState(() => _autoplayDisableOnInteraction = value)),
+                onChanged: (bool value) => setState(() => _autoplayDisableOnInteraction = value)),
           ),
           //Pannel Begin
-          new FormWidget(
-            label: "loop",
-            child: new Switch(
-                value: _loop,
-                onChanged: (bool value) => setState(() => _loop = value)),
+          FormWidget(
+            label: 'loop',
+            child: Switch(value: _loop, onChanged: (bool value) => setState(() => _loop = value)),
           ),
-          new FormWidget(
-            label: "outer",
-            child: new Switch(
-                value: _outer,
-                onChanged: (bool value) => setState(() => _outer = value)),
+          FormWidget(
+            label: 'outer',
+            child: Switch(value: _outer, onChanged: (bool value) => setState(() => _outer = value)),
           ),
           //Pannel Begin
-          new FormWidget(
-            label: "autoplay",
-            child: new Switch(
-                value: _autoplay,
-                onChanged: (bool value) => setState(() => _autoplay = value)),
+          FormWidget(
+            label: 'autoplay',
+            child: Switch(value: _autoplay, onChanged: (bool value) => setState(() => _autoplay = value)),
           ),
 
-          new FormWidget(
-            label: "padding",
-            child: new NumberPad(
+          FormWidget(
+            label: 'padding',
+            child: NumberPad(
               number: _padding,
               step: 5.0,
               min: 0.0,
@@ -246,9 +222,9 @@ class _ExampleCustomState extends State<ExampleCustom> {
               },
             ),
           ),
-          new FormWidget(
-            label: "scale",
-            child: new NumberPad(
+          FormWidget(
+            label: 'scale',
+            child: NumberPad(
               number: _scale,
               step: 0.1,
               min: 0.0,
@@ -259,9 +235,9 @@ class _ExampleCustomState extends State<ExampleCustom> {
               },
             ),
           ),
-          new FormWidget(
-            label: "fade",
-            child: new NumberPad(
+          FormWidget(
+            label: 'fade',
+            child: NumberPad(
               number: _fade,
               step: 0.1,
               min: 0.0,
@@ -272,9 +248,9 @@ class _ExampleCustomState extends State<ExampleCustom> {
               },
             ),
           ),
-          new FormWidget(
-            label: "itemCount",
-            child: new NumberPad(
+          FormWidget(
+            label: 'itemCount',
+            child: NumberPad(
               number: _itemCount,
               step: 1,
               min: 0,
@@ -286,9 +262,9 @@ class _ExampleCustomState extends State<ExampleCustom> {
             ),
           ),
 
-          new FormWidget(
-            label: "radius",
-            child: new NumberPad(
+          FormWidget(
+            label: 'radius',
+            child: NumberPad(
               number: _radius,
               step: 1.0,
               min: 0.0,
@@ -300,9 +276,9 @@ class _ExampleCustomState extends State<ExampleCustom> {
             ),
           ),
 
-          new FormWidget(
-            label: "viewportFraction",
-            child: new NumberPad(
+          FormWidget(
+            label: 'viewportFraction',
+            child: NumberPad(
               number: _viewportFraction,
               step: 0.1,
               max: 1.0,
@@ -314,10 +290,10 @@ class _ExampleCustomState extends State<ExampleCustom> {
             ),
           ),
 
-          new FormWidget(
-              label: "curve",
-              child: new FormSelect<Curve>(
-                  placeholder: "Select curve",
+          FormWidget(
+              label: 'curve',
+              child: FormSelect<Curve>(
+                  placeholder: 'Select curve',
                   value: _layout,
                   values: [
                     Curves.easeInOut,

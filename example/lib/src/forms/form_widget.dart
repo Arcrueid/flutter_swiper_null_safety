@@ -10,14 +10,12 @@ class FormWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Padding(
-        padding: new EdgeInsets.all(5.0),
-        child: new Row(
+    return Padding(
+        padding: EdgeInsets.all(5.0),
+        child: Row(
           children: <Widget>[
-            new Text(label, style: new TextStyle(fontSize: 14.0)),
-            new Expanded(
-                child:
-                    new Align(alignment: Alignment.centerRight, child: child))
+            Text(label, style: TextStyle(fontSize: 14.0)),
+            Expanded(child: Align(alignment: Alignment.centerRight, child: child))
           ],
         ));
   }
@@ -29,11 +27,7 @@ class FormSelect<T> extends StatefulWidget {
   final List<dynamic> values;
   final dynamic value;
 
-  FormSelect(
-      {required this.placeholder,
-      required this.valueChanged,
-      this.value,
-      required this.values});
+  FormSelect({required this.placeholder, required this.valueChanged, this.value, required this.values});
 
   @override
   State<StatefulWidget> createState() {
@@ -61,46 +55,43 @@ class _FormSelectState extends State<FormSelect> {
     String placeholder = widget.placeholder;
     List<dynamic> values = widget.values;
 
-    return new Container(
-      child: new InkWell(
-        child: new Text(_selectedIndex < 0
-            ? placeholder
-            : values[_selectedIndex].toString()),
+    return Container(
+      child: InkWell(
+        child: Text(_selectedIndex < 0 ? placeholder : values[_selectedIndex].toString()),
         onTap: () {
           _selectedIndex = 0;
           showBottomSheet(
               context: context,
               builder: (BuildContext context) {
-                return new SizedBox(
+                return SizedBox(
                   height: values.length * 30.0 + 200.0,
-                  child: new Column(
+                  child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      new SizedBox(
+                      SizedBox(
                         height: values.length * 30.0 + 70.0,
-                        child: new CupertinoPicker(
+                        child: CupertinoPicker(
                           itemExtent: 30.0,
                           children: values.map((dynamic value) {
-                            return new Text(value.toString());
+                            return Text(value.toString());
                           }).toList(),
                           onSelectedItemChanged: (int index) {
                             _selectedIndex = index;
                           },
                         ),
                       ),
-                      new Center(
-                        child: new RaisedButton(
+                      Center(
+                        child: ElevatedButton(
                           onPressed: () {
                             if (_selectedIndex >= 0) {
-                              widget
-                                  .valueChanged(widget.values[_selectedIndex]);
+                              widget.valueChanged(widget.values[_selectedIndex]);
                             }
 
                             setState(() {});
 
                             Navigator.of(context).pop();
                           },
-                          child: new Text("ok"),
+                          child: Text('ok'),
                         ),
                       )
                     ],
@@ -121,11 +112,7 @@ class NumberPad extends StatelessWidget {
   final ValueChanged<num> onChangeValue;
 
   NumberPad(
-      {required this.number,
-      required this.step,
-      required this.onChangeValue,
-      required this.max,
-      required this.min});
+      {required this.number, required this.step, required this.onChangeValue, required this.max, required this.min});
 
   void onAdd() {
     onChangeValue(number + step > max ? max : number + step);
@@ -137,15 +124,15 @@ class NumberPad extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Row(
+    return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        new IconButton(icon: new Icon(Icons.exposure_neg_1), onPressed: onSub),
-        new Text(
+        IconButton(icon: Icon(Icons.exposure_neg_1), onPressed: onSub),
+        Text(
           number is int ? number.toString() : number.toStringAsFixed(1),
-          style: new TextStyle(fontSize: 14.0),
+          style: TextStyle(fontSize: 14.0),
         ),
-        new IconButton(icon: new Icon(Icons.exposure_plus_1), onPressed: onAdd)
+        IconButton(icon: Icon(Icons.exposure_plus_1), onPressed: onAdd)
       ],
     );
   }
