@@ -70,10 +70,6 @@ vector_math
 2.12
 file:///Users/sora/.pub-cache/hosted/pub.dartlang.org/vector_math-2.1.0/
 file:///Users/sora/.pub-cache/hosted/pub.dartlang.org/vector_math-2.1.0/lib/
-flutter_swiper_null_safety
-2.12
-file:///Users/sora/Dev/Cruzados/app/cruzados/flutter_swiper_null_safety/
-file:///Users/sora/Dev/Cruzados/app/cruzados/flutter_swiper_null_safety/lib/
 sky_engine
 2.12
 file:///Users/sora/Dev/flutter/bin/cache/pkg/sky_engine/
@@ -86,4 +82,8 @@ flutter_test
 2.12
 file:///Users/sora/Dev/flutter/packages/flutter_test/
 file:///Users/sora/Dev/flutter/packages/flutter_test/lib/
+flutter_swiper_null_safety
+2.12
+file:///Users/sora/Github/flutter_swiper_null_safety/
+file:///Users/sora/Github/flutter_swiper_null_safety/lib/
 2

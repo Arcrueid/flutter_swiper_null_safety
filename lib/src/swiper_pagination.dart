@@ -265,6 +265,8 @@ class SwiperPagination extends SwiperPlugin {
 
   final BoxConstraints? constraints;
 
+  final Object? heroTag;
+
   /// Build the widet
   final SwiperPlugin builder;
 
@@ -277,6 +279,7 @@ class SwiperPagination extends SwiperPlugin {
       this.padding = const EdgeInsets.all(3.0),
       this.decoration,
       this.constraints,
+      this.heroTag,
       this.builder: SwiperPagination.dots});
 
   Widget build(BuildContext context, SwiperPluginConfig config) {
@@ -289,6 +292,15 @@ class SwiperPagination extends SwiperPlugin {
       constraints: constraints,
       child: this.builder.build(context, config),
     );
+
+    if (heroTag != null) {
+      child = Hero(
+        tag: heroTag!,
+        child: child,
+      );
+    }
+
+
     if (!config.outer) {
       child = Align(
         key: key,
