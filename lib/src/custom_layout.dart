@@ -23,7 +23,7 @@ abstract class _CustomLayoutStateBase<T extends _SubSwiper> extends State<T> wit
 
   @override
   void didChangeDependencies() {
-    WidgetsBinding.instance!.addPostFrameCallback(_getSize);
+    WidgetsBinding.instance.addPostFrameCallback(_getSize);
     super.didChangeDependencies();
   }
 
